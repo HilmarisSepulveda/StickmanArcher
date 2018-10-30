@@ -4,7 +4,6 @@ public class Stickman {
 	private int health;
 	private Point location;
 
-
 	public int getHealth() {
 		return health;
 	}
