@@ -18,14 +18,12 @@ public class MainPanel extends JPanel {
 	 */
 	MainPanel() {
 		
-		background = new 
-
 		// Sets the background image
 //		URL url = Main.class.getResource("/resources/stars.jpg");
 //		background = new ImageIcon(url).getImage();
 
-		setOpaque(true);
-		setVisible(true);
+//		setOpaque(true);
+//		setVisible(true);
 	}
 
 	/**
