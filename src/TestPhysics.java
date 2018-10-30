@@ -1,9 +1,10 @@
 
-public class Test {
+public class TestPhysics {
 	
 	public static void main(String[] args) {
 
 		System.out.println("Hello World # 2");
+		
 		
 	}
 
