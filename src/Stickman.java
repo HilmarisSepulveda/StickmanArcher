@@ -19,7 +19,6 @@ public class Stickman {
 	}
  
 	
-
 	public void setLocation(Point location) {
 		this.location = location;
 	}
