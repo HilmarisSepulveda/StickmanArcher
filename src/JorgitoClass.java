@@ -3,8 +3,7 @@ public class JorgitoClass {
 	
 	public static void main(String[] args) {
 
-		System.out.println("Hello World"
-				+ "hghhh");
+		System.out.println("Hello World");
 		
 	}
 
