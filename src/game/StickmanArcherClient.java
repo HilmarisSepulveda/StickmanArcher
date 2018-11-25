@@ -1,17 +1,12 @@
 package game;
-import java.awt.Toolkit;
 import java.util.Random;
 import java.util.Scanner;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import entity.Arrow;
 import entity.Bow;
 import entity.Player;
 import geometry.*;
 
-import java.awt.Color;
 /**
  * This class is a console application for the
  * 	Stickman Archer game.
@@ -21,17 +16,11 @@ import java.awt.Color;
  */
 public class StickmanArcherClient {
 
-	// The entry point of the application
 	public static void main(String[] args) {
-		
-		
-//		initWindow();
-	
 
 		Scanner in = new Scanner (System.in);
 
 		printIntroDrawing();
-		
 		Random rand = new Random();
 //		double randomNum = rand.nextDouble() * 100;
 		
@@ -73,17 +62,6 @@ public class StickmanArcherClient {
 		in.close();
 		
 	}
-
-//	private static void initWindow() {
-//		JFrame frame = new JFrame();
-//		JPanel panel = new JPanel();
-//		
-//		frame.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-//		panel.setBackground(Color.BLACK);
-//		frame.add(panel);
-//		frame.pack();
-//		frame.setVisible(true);		
-//	}
 
 	private static void showGreeting(Player player, Scanner in) {
 		System.out.println();
@@ -254,7 +232,7 @@ public class StickmanArcherClient {
 				"                                                        \\  |.\r\n" + 
 				"                                                          \\|.\r\n" + 
 				"                                                          /.\r\n" + 
-				" Image by: cyu@athena.mit.edu (Erorppn Xrzavgm)              |");
+				" Image from: cyu@athena.mit.edu (Erorppn Xrzavgm)              |");
 		System.out.println();
 		System.out.println("***************************************************************");
 		System.out.println("***************************************************************");
