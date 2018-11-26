@@ -1,11 +1,14 @@
 package entity;
+import java.io.Serializable;
+import java.net.Socket;
+
 import geometry.*;
 
 /**
  * This class represents a player entity represented 
  * by a circle.
  */
-public class Player extends Circle {
+public class Player extends Circle implements Serializable, Runnable{
 
 	/** Default player size */
 	private final int DEFAULT_RADIUS = 10;
@@ -13,8 +16,41 @@ public class Player extends Circle {
 	/** Player name */
 	private String name;
 
+	@Override
+	public String toString() {
+		return "Player [DEFAULT_RADIUS=" + DEFAULT_RADIUS + ", name=" + name + ", HP=" + HP + ", socket=" + socket
+				+ "]";
+	}
+
+
 	/** Player hit points */
 	private int HP = 100;
+	
+	Socket socket;
+	
+	public Player()	{}
+	
+	/**
+	 * Creates a player with the given name and location.
+	 * @param name Player name.
+	 * @param location Player location.
+	 */
+	public Player (Socket socket, String name, Point location) {
+		super();
+		setPlayerLocation(location);
+		setPlayerSize(DEFAULT_RADIUS);
+		setName(name);
+		setHP(this.HP);
+		this.socket = socket;
+	}
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
 
 	/**
 	 * Creates a player with the given name and location.
@@ -97,6 +133,12 @@ public class Player extends Circle {
 	 */
 	public void setHP(int hP) {
 		HP = hP;
+	}
+
+	public void run() {
+
+			System.out.println("All players connected.");
+		
 	}
 
 }

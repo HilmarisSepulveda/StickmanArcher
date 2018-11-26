@@ -23,7 +23,6 @@ public class StickmanArcherClient {
 		printIntroDrawing();
 		Random rand = new Random();
 //		double randomNum = rand.nextDouble() * 100;
-		
 
 		Player player = new Player(in.nextLine(), new Point(0,0));
 		
