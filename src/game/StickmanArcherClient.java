@@ -45,7 +45,7 @@ public class StickmanArcherClient {
 			System.out.println();
 
 			printHP(player, p2);
-			calculateTrajectory(arrow, bow);
+			calculateTrajectory(arrow, bow, p2);
 			calculateHit(p2, arrow);
 			printHP(player, p2);
 
@@ -121,8 +121,9 @@ public class StickmanArcherClient {
 	 * Calculates the trajectory of a projectile
 	 * @param arrow The arrow being fired.
 	 * @param bow The bow used to fire the arrow.
+	 * @param p2 
 	 */
-	private static void calculateTrajectory(Arrow arrow, Bow bow) {
+	private static void calculateTrajectory(Arrow arrow, Bow bow, Player p2) {
 
 		final double ACCELERATION = - 9.8;
 		double velocity = bow.getPower() * arrow.getVelocity();
@@ -146,10 +147,11 @@ public class StickmanArcherClient {
 			y = yVelocity * t + 0.5 * ACCELERATION * t * t;
 
 			Point location = new Point ();
-			location.setX(Math.round(x));
-			location.setY(Math.round(y));
+			location.setX(x);
+			location.setY(y);
 
 			arrow.setLocation(location);	
+			calculateHit(p2,arrow);
 		}
 	}
 
@@ -176,10 +178,10 @@ public class StickmanArcherClient {
 		double y = arrow.getLocation().getY();
 
 
-//		if ((Math.pow((x-h), 2) + Math.pow((y- k), 2) <= 
-//				Math.pow(player.getPlayerSize(), 2))) {
-		if ((x > h - player.getPlayerSize() && x < h + player.getPlayerSize()) &&
-				(y > k - player.getPlayerSize() && y < k + player.getPlayerSize())) {
+		if ((Math.pow((x-h), 2) + Math.pow((y- k), 2) <= 
+				Math.pow(player.getPlayerSize(), 2))) {
+//		if ((x > h - player.getPlayerSize() && x < h + player.getPlayerSize()) &&
+//				(y > k - player.getPlayerSize() && y < k + player.getPlayerSize())) {
 			return true;
 
 		} else 
