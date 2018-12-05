@@ -5,7 +5,7 @@ import geometry.*;
  * This class represents an arrow entity.
  */
 public class Arrow {
-	
+
 	/** The damage the arrow deals the player. */
 	private int damage = 20;
 	

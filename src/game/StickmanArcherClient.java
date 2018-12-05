@@ -22,17 +22,17 @@ public class StickmanArcherClient {
 
 		printIntroDrawing();
 		Random rand = new Random();
-//		double randomNum = rand.nextDouble() * 100;
+		//		double randomNum = rand.nextDouble() * 100;
 
 		Player player = new Player(in.nextLine(), new Point(0,0));
-		
+
 		// Must remove the player computer
 		Player p2 = new Player("Computer", new Point(40, 0));
 		Arrow arrow = new Arrow();
 		Bow bow = new Bow();
-		
+
 		showGreeting(player, in);
-		
+
 		// For testing purposes (to kill him quickly)
 		arrow.setDamage(100);
 
@@ -44,22 +44,22 @@ public class StickmanArcherClient {
 			bow.setPower(in.nextDouble()); // 20
 			System.out.println();
 
-			printHP(player, p2);
+//			printHP(player, p2);
 			calculateTrajectory(arrow, bow, p2);
 			calculateHit(p2, arrow);
 			printHP(player, p2);
 
 		} // end while
-		
+
 		if (player.getHP() <= 0)
 			System.out.println(player.getName() + " has died.");
 		if (p2.getHP() <= 0)
 			System.out.println(p2.getName() + " has died.");
 		System.out.println();
-		
-		
+
+
 		in.close();
-		
+
 	}
 
 	private static void showGreeting(Player player, Scanner in) {
@@ -76,6 +76,10 @@ public class StickmanArcherClient {
 		in.nextLine();		
 	}
 
+	//	private static void calcualteDamage() {
+	//		
+	//	}
+
 
 
 	/**
@@ -87,13 +91,8 @@ public class StickmanArcherClient {
 	private static void calculateHit(Player player, Arrow arrow) {
 		System.out.print("x location: " + arrow.getLocation().getX() + "\n");
 		System.out.print("y location: " + arrow.getLocation().getY() + "\n");
-		if(playerWasHit(player, arrow)) {
-			System.out.println("Arrow hit!");
-			System.out.println();
-			player.setHP(player.getHP() - arrow.getDamage());
-		}
+	
 
-		else {
 			// Calculate missed distance
 			double missedHint =  arrow.getLocation().getX() -
 					player.getLocation().getX(); 
@@ -105,7 +104,7 @@ public class StickmanArcherClient {
 				System.out.println("Hint: Try adding more power or "
 						+ "increasing the angle");
 			}
-			
+
 			// If missed distance positive, it passed the target.
 			if (missedHint > 0) {
 				System.out.println("Arrow missed target by " +
@@ -114,7 +113,7 @@ public class StickmanArcherClient {
 						+ "decreasing the angle.");
 			}
 			System.out.println();
-		}		
+				
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class StickmanArcherClient {
 		final double ACCELERATION = - 9.8;
 		double velocity = bow.getPower() * arrow.getVelocity();
 		double angle = bow.getAngle();
-		int steps = 2;
+		int steps = 60;
 
 		double xVelocity = velocity * Math.cos(angle);
 		double yVelocity = velocity * Math.sin(angle);
@@ -140,19 +139,26 @@ public class StickmanArcherClient {
 		double y = 0.0;
 		double t = 0.0;
 
-		for (int i = 1; i <= steps; i++) {
-			t += timeIncrement;
 
-			x += xIncrement;
-			y = yVelocity * t + 0.5 * ACCELERATION * t * t;
+			for (int i = 1; i <= steps -1; i++) {
+				t += timeIncrement;
 
-			Point location = new Point ();
-			location.setX(x);
-			location.setY(y);
+				x += xIncrement;
+				y = yVelocity * t + 0.5 * ACCELERATION * t * t;
 
-			arrow.setLocation(location);	
-			calculateHit(p2,arrow);
+				Point location = new Point ();
+				location.setX(x);
+				location.setY(y);
+
+				arrow.setLocation(location);
+
+				playerWasHit(p2, arrow);
+				System.out.println(location);
+			
 		}
+
+
+
 	}
 
 	/**
@@ -180,10 +186,9 @@ public class StickmanArcherClient {
 
 		if ((Math.pow((x-h), 2) + Math.pow((y- k), 2) <= 
 				Math.pow(player.getPlayerSize(), 2))) {
-//		if ((x > h - player.getPlayerSize() && x < h + player.getPlayerSize()) &&
-//				(y > k - player.getPlayerSize() && y < k + player.getPlayerSize())) {
+			System.out.println("Arrow hit!");
+			player.setHP(0);
 			return true;
-
 		} else 
 			return false;
 	}
