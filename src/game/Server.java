@@ -8,6 +8,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Random;
+
+import javax.activity.ActivityRequiredException;
 
 import entity.Arrow;
 import entity.Bow;
@@ -25,6 +28,9 @@ public class Server {
 		// 1. Open server connection
 		ServerSocket listener = new ServerSocket(9090);
 		System.out.println("Stickman Archer server is running.");
+
+		int p1Lives = 2, p2Lives = 2;
+		Player opponent = new Player(new Point(40,0));
 
 
 		// http://cs.lmu.edu/~ray/notes/javanetexamples/#tictactoe
@@ -49,7 +55,7 @@ public class Server {
 
 				Player p1 = new Player();
 				p1.setName(p1Name);
-//				p1.setHP(lives);
+				//				p1.setHP(lives);
 				p1.setPlayerLocation(new Point(0,0));
 				p1.setSocket(socketC1);
 
@@ -62,9 +68,10 @@ public class Server {
 
 				Player p2 = new Player();
 				p2.setName(p2Name);
-//				p2.setHP(lives);
-				p2.setPlayerLocation(new Point(40,0));
+				//				p2.setHP(lives);
+				p2.setPlayerLocation(new Point(0,0));
 				p2.setSocket(socketC2);
+
 
 				Player activePlayer = new Player();
 				Player waitingPlayer = new Player();
@@ -77,9 +84,7 @@ public class Server {
 						) {
 
 					// 6. Turns
-//					while((p1lives > 0 &&
-//							p2lives > 0
-//							)) {
+					while(p1Lives > 0 && p2Lives > 0) {
 
 						// Send turn
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
@@ -107,26 +112,63 @@ public class Server {
 						String powerString = input.readLine();
 						bow.setPower(Double.parseDouble(powerString));
 
-						StickmanCalculations.calculateTrajectory(arrow, bow, waitingPlayer);
-						
-						// Mandar al cliente
-						StickmanCalculations.calculateHit(waitingPlayer, arrow);
-						
+						StickmanCalculations.calculateTrajectory(arrow, bow, opponent);
 
-						if (p1.getHP() <= 0)
-							System.out.println(p1.getName() + " has died.");
-						if (p2.getHP() <= 0)
-							System.out.println(p2.getName() + " has died.");
-						System.out.println();
-						
+						// Mandar al cliente
+						StickmanCalculations.calculateHit(opponent, arrow);
+					
+						Random rand = new Random();
+						int randNum = rand.nextInt(300);
+
+
+						if (opponent.getHP() <= 0) {
+							System.out.println(waitingPlayer.getName() + " has died.");
+
+							if(waitingPlayer.equals(p1)) {
+								p1Lives--;
+								System.out.println(waitingPlayer.getName() +"'s lives = " + p1Lives);
+								System.out.println(activePlayer.getName() +"'s lives = " + p2Lives);
+							}
+
+							if(waitingPlayer.equals(p2)) {
+								p2Lives--;
+								System.out.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+								System.out.println(activePlayer.getName() +"'s lives = " + p1Lives);
+							}
+								
+							opponent.setLocation(new Point (randNum ,0));
+							
+							System.out.println("Opponent HP before increase: "  + opponent.getHP());
+							opponent.setDefaultHP();
+							
+							System.out.println("Opponet location after reset:" + opponent.getLocation());
+							System.out.println("Opponent HP after increase: "  + opponent.getHP());
+
+		
+							System.out.println("P1 lives = " + p1Lives);
+							System.out.println("P2 lives = " + p2Lives);
+						}
+
 						Player temp = activePlayer;
 						activePlayer = waitingPlayer;
 						waitingPlayer = temp;
 					}
-
-
+					
+					System.out.println();
+					System.out.println("GAME OVER!!!");
+					
+					if(p1Lives == 0)
+						System.out.println(p2.getName() + "wins.");
+					
+					if(p2Lives == 0)
+						System.out.println(p1.getName() + "wins.");
+					
+					
+					socketC1.close();
+					socketC2.close();
+					System.exit(0);
 				}
-//			}
+			}
 		}
 
 		catch (SocketException se) {

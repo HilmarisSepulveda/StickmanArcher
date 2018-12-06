@@ -12,6 +12,7 @@ public class Player extends Circle implements Serializable, Runnable{
 
 	/** Default player size */
 	private final int DEFAULT_RADIUS = 3;
+	private final int DEFAULT_HP = 5;
 
 	/** Player name */
 	private String name;
@@ -40,8 +41,15 @@ public class Player extends Circle implements Serializable, Runnable{
 		setPlayerLocation(location);
 		setPlayerSize(DEFAULT_RADIUS);
 		setName(name);
-		setHP(this.HP);
+		setHP(DEFAULT_HP);
 		this.socket = socket;
+	}
+	
+	public Player(Point location) {
+		super();
+		setPlayerSize(DEFAULT_RADIUS);
+		setPlayerLocation(location);
+		setHP(DEFAULT_HP);
 	}
 
 	public Socket getSocket() {
@@ -62,7 +70,7 @@ public class Player extends Circle implements Serializable, Runnable{
 		setPlayerLocation(location);
 		setPlayerSize(DEFAULT_RADIUS);
 		setName(name);
-		setHP(this.HP);
+		setHP(DEFAULT_HP);
 	}
 
 	/**
@@ -139,6 +147,10 @@ public class Player extends Circle implements Serializable, Runnable{
 
 			System.out.println("All players connected.");
 		
+	}
+	
+	public void setDefaultHP() {
+		setHP(DEFAULT_HP);
 	}
 
 }
