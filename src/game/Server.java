@@ -26,10 +26,6 @@ public class Server {
 		ServerSocket listener = new ServerSocket(9090);
 		System.out.println("Stickman Archer server is running.");
 
-		int lives = 5;
-		int size = 3;
-
-		Player player1, player2;
 
 		// http://cs.lmu.edu/~ray/notes/javanetexamples/#tictactoe
 		try {
@@ -38,8 +34,6 @@ public class Server {
 				// Bow and arrow
 				Arrow arrow = new Arrow();
 				Bow bow = new Bow();
-				double angle;
-				double power;
 
 				BufferedReader input;
 				PrintWriter output;
@@ -50,65 +44,89 @@ public class Server {
 				input = new BufferedReader(new InputStreamReader(socketC1.getInputStream()));
 				String p1Name = input.readLine();
 				System.out.println(p1Name + " is connected.");
-				
+
 				//////////
 
 				Player p1 = new Player();
 				p1.setName(p1Name);
-				p1.setHP(lives);
+//				p1.setHP(lives);
 				p1.setPlayerLocation(new Point(0,0));
-				p1.setPlayerSize(size);
 				p1.setSocket(socketC1);
 
 				// 5. Create player 2 with client 2 input
 				// Player 2
-//				Socket socketC2 = listener.accept();
-//				input = new BufferedReader(new InputStreamReader(socketC2.getInputStream()));
-//				String p2Name = input.readLine();
-//
-//				Player p2 = new Player();
-//				p2.setName(p2Name);
-//				p2.setHP(lives);
-//				p2.setPlayerLocation(new Point(40,0));
-//				p2.setPlayerSize(size);
-//				p2.setSocket(socketC2);
-			
+				Socket socketC2 = listener.accept();
+				input = new BufferedReader(new InputStreamReader(socketC2.getInputStream()));
+				String p2Name = input.readLine();
+				System.out.println(p2Name + " is connected.");
 
+				Player p2 = new Player();
+				p2.setName(p2Name);
+//				p2.setHP(lives);
+				p2.setPlayerLocation(new Point(40,0));
+				p2.setSocket(socketC2);
+
+				Player activePlayer = new Player();
+				Player waitingPlayer = new Player();
+
+				activePlayer = p1;
+				waitingPlayer = p2;
 
 				while(socketC1.isConnected() 
-//						&& socketC2.isConnected()
+						&& socketC2.isConnected()
 						) {
 
 					// 6. Turns
-					while((p1.getHP() > 0 
-//							&& p2.getHP() > 0
-							)) {
-						
+//					while((p1lives > 0 &&
+//							p2lives > 0
+//							)) {
+
 						// Send turn
-						output = new PrintWriter(socketC1.getOutputStream(), true);
+						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("true");
 
+						// Send turn
+						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+						output.println("false");
+
+
 						// Send enter angle prompt
-						output = new PrintWriter(socketC1.getOutputStream(), true);
+						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("Enter the angle: ");
 
 						// Receive angle
-						input = new BufferedReader(new InputStreamReader(socketC1.getInputStream()));
+						input = new BufferedReader(new InputStreamReader(activePlayer.getSocket().getInputStream()));
 						String angleString = input.readLine();
-						angle = Double.parseDouble(angleString);
+						bow.setAngle(Double.parseDouble(angleString));
 
 						// Send enter power prompt
-						output = new PrintWriter(socketC1.getOutputStream(), true);
+						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("Enter the power: ");
 
 						// Receive power
 						String powerString = input.readLine();
-						power = Double.parseDouble(powerString);
+						bow.setPower(Double.parseDouble(powerString));
+
+						StickmanCalculations.calculateTrajectory(arrow, bow, waitingPlayer);
+						
+						// Mandar al cliente
+						StickmanCalculations.calculateHit(waitingPlayer, arrow);
+						
+
+						if (p1.getHP() <= 0)
+							System.out.println(p1.getName() + " has died.");
+						if (p2.getHP() <= 0)
+							System.out.println(p2.getName() + " has died.");
+						System.out.println();
+						
+						Player temp = activePlayer;
+						activePlayer = waitingPlayer;
+						waitingPlayer = temp;
 					}
 
 
 				}
-			}
+//			}
 		}
 
 		catch (SocketException se) {

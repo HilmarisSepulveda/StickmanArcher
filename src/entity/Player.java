@@ -24,7 +24,7 @@ public class Player extends Circle implements Serializable, Runnable{
 
 
 	/** Player hit points */
-	private int HP = 100;
+	private int HP = 5;
 	
 	Socket socket;
 	
