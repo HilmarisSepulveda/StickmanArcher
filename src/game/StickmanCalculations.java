@@ -78,7 +78,6 @@ public class StickmanCalculations {
 		System.out.println();
 		System.out.println("***************************************************************");
 		in.nextLine();	
-		System.out.println();
 	}
 
 	//	private static void calcualteDamage() {
