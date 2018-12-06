@@ -77,7 +77,8 @@ public class StickmanCalculations {
 		System.out.println(" Press enter to start the adventure.");
 		System.out.println();
 		System.out.println("***************************************************************");
-		in.nextLine();		
+		in.nextLine();	
+		System.out.println();
 	}
 
 	//	private static void calcualteDamage() {
