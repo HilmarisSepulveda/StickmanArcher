@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
@@ -21,44 +23,94 @@ public class Client {
 	 * it serves.
 	 */
 	public static void main(String[] args) throws IOException {
-		
-		
-		
-		
-		
-		
 
-		Scanner in = new Scanner(System.in);
-		//
-		//		System.out.println(
-		//				"Enter IP Address of a machine that is\n running "
-		//						+ "the date service on port 9090:");
-		String serverAddress = "172.20.10.4";
-		//in.nextLine();
 
-		boolean isConnected = false;
-		while(!isConnected) {
+		String serverAddress = "192.168.1.118";		
+		Socket socket = new Socket(serverAddress, 9090);
+
+		BufferedReader input;
+		PrintWriter output;
+
+		boolean myTurn = false;
+
+		boolean isConnected = socket.isConnected();
+
+		while(isConnected) {
 
 			try {
-				
-				Socket socket = new Socket(serverAddress, 9090);
+
+				// 2 and 4: Print intro and Receive player name and send to server
+				printIntroDrawing();
+
+				Scanner in = new Scanner (System.in);
+				String playerName = in.nextLine();
+
+
 				System.out.println("Connected to server.");
+
+				// Send player name to server
+				output = new PrintWriter(socket.getOutputStream(), true);
+				output.println(playerName);
 				
 				
-//				isConnected = true;
-//				printIntroDrawing();
-//
-//				ObjectOutputStream outputStream = 
-//						new ObjectOutputStream(socket.getOutputStream());
-//
-//				Player player = new Player(in.nextLine(), new Point(0,0));
-//				System.out.println("Object to be written = " + player.toString());
-//				outputStream.writeObject(player);
-//				
-//				outputStream.flush(); // necessary to avoid SocketException
-//				outputStream.close();
-////				socket.close();
-				
+
+				// Recieve turn
+				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				String turn = input.readLine();
+
+				if (turn == "true") {
+					myTurn = true;
+				}
+
+				if (myTurn) {
+
+
+					// Recieve prompt to enter angle
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					String prompt = input.readLine();
+					System.out.println(prompt);
+
+					// Sends angle to server
+					output = new PrintWriter(socket.getOutputStream(), true);
+					output.println(in.nextDouble());
+
+					// Receive prompt to enter power
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
+
+					// Sends power to Server
+					output = new PrintWriter(socket.getOutputStream(), true);
+					output.println(in.nextDouble());
+
+					myTurn = false;
+				}
+
+				else {
+					System.out.println("Waiting for opponent...");
+				}
+
+
+
+
+
+				//				isConnected = true;
+				//				printIntroDrawing();
+				//
+				//				ObjectOutputStream outputStream = 
+				//						new ObjectOutputStream(socket.getOutputStream());
+				//
+				//				Player player = new Player(in.nextLine(), new Point(0,0));
+				//				System.out.println("Object to be written = " + player.toString());
+				//				outputStream.writeObject(player);
+				//				
+				//				outputStream.flush(); // necessary to avoid SocketException
+				//				outputStream.close();
+				////				socket.close();
+
+			}
+			catch (ConnectException e) {
+				e.printStackTrace();
 			}
 			catch (SocketException se) {
 				se.printStackTrace();
