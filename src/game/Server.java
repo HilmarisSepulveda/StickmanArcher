@@ -17,8 +17,11 @@ public class Server {
 	 */
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 
+		// 1. Open server connection
 		ServerSocket listener = new ServerSocket(9090);
 		System.out.println("Stickman Archer server is running.");
+		
+		
 		
 		Player player1, player2;
 

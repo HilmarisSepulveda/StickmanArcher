@@ -21,6 +21,12 @@ public class Client {
 	 * it serves.
 	 */
 	public static void main(String[] args) throws IOException {
+		
+		
+		
+		
+		
+		
 
 		Scanner in = new Scanner(System.in);
 		//
@@ -34,21 +40,24 @@ public class Client {
 		while(!isConnected) {
 
 			try {
+				
 				Socket socket = new Socket(serverAddress, 9090);
 				System.out.println("Connected to server.");
-				isConnected = true;
-				printIntroDrawing();
-
-				ObjectOutputStream outputStream = 
-						new ObjectOutputStream(socket.getOutputStream());
-
-				Player player = new Player(in.nextLine(), new Point(0,0));
-				System.out.println("Object to be written = " + player.toString());
-				outputStream.writeObject(player);
 				
-				outputStream.flush(); // necessary to avoid SocketException
-				outputStream.close();
-//				socket.close();
+				
+//				isConnected = true;
+//				printIntroDrawing();
+//
+//				ObjectOutputStream outputStream = 
+//						new ObjectOutputStream(socket.getOutputStream());
+//
+//				Player player = new Player(in.nextLine(), new Point(0,0));
+//				System.out.println("Object to be written = " + player.toString());
+//				outputStream.writeObject(player);
+//				
+//				outputStream.flush(); // necessary to avoid SocketException
+//				outputStream.close();
+////				socket.close();
 				
 			}
 			catch (SocketException se) {
