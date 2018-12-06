@@ -37,36 +37,36 @@ public class Client {
 
 		printIntroDrawing();
 		
+		// 2 and 4: Print intro and Receive player name and send to server
+
+
+		Scanner in = new Scanner (System.in);
+		String playerName = in.nextLine();
+
+
+		System.out.println("Connected to server.");
+
+		// Send player name to server
+		output = new PrintWriter(socket.getOutputStream(), true);
+		output.println(playerName);
+		
 		while(isConnected) {
 
 			try {
 
-				// 2 and 4: Print intro and Receive player name and send to server
-
-
-				Scanner in = new Scanner (System.in);
-				String playerName = in.nextLine();
-
-
-				System.out.println("Connected to server.");
-
-				// Send player name to server
-				output = new PrintWriter(socket.getOutputStream(), true);
-				output.println(playerName);
-				
-				
-
 				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
+				System.out.println(turn);
 
-				if (turn == "true") {
+				if (turn.equals("true")) {
 					myTurn = true;
-					System.out.println("TESTSTSTST");
 				}
+				
+				if (!myTurn)
+					System.out.println("Waiting for opponent...");
 
-				if (myTurn) {
-
+				while (myTurn) {
 
 					// Receive prompt to enter angle
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -87,10 +87,6 @@ public class Client {
 					output.println(in.nextDouble());
 
 					myTurn = false;
-				}
-
-				else {
-					System.out.println("Waiting for opponent...");
 				}
 
 
