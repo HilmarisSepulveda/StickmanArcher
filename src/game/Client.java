@@ -35,12 +35,14 @@ public class Client {
 
 		boolean isConnected = socket.isConnected();
 
+		printIntroDrawing();
+		
 		while(isConnected) {
 
 			try {
 
 				// 2 and 4: Print intro and Receive player name and send to server
-				printIntroDrawing();
+
 
 				Scanner in = new Scanner (System.in);
 				String playerName = in.nextLine();
@@ -54,18 +56,19 @@ public class Client {
 				
 				
 
-				// Recieve turn
+				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
 
 				if (turn == "true") {
 					myTurn = true;
+					System.out.println("TESTSTSTST");
 				}
 
 				if (myTurn) {
 
 
-					// Recieve prompt to enter angle
+					// Receive prompt to enter angle
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					String prompt = input.readLine();
 					System.out.println(prompt);
