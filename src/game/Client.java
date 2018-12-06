@@ -35,8 +35,8 @@ public class Client {
 
 		boolean isConnected = socket.isConnected();
 
-		printIntroDrawing();
-		
+		StickmanCalculations.printIntroDrawing();
+
 		// 2 and 4: Print intro and Receive player name and send to server
 
 
@@ -49,7 +49,7 @@ public class Client {
 		// Send player name to server
 		output = new PrintWriter(socket.getOutputStream(), true);
 		output.println(playerName);
-		
+
 		while(isConnected) {
 
 			try {
@@ -62,7 +62,7 @@ public class Client {
 				if (turn.equals("true")) {
 					myTurn = true;
 				}
-				
+
 				if (!myTurn)
 					System.out.println("Waiting for opponent...");
 
@@ -89,20 +89,6 @@ public class Client {
 					myTurn = false;
 				}
 
-
-
-
-
-				//				isConnected = true;
-				//				printIntroDrawing();
-				//
-				//				ObjectOutputStream outputStream = 
-				//						new ObjectOutputStream(socket.getOutputStream());
-				//
-				//				Player player = new Player(in.nextLine(), new Point(0,0));
-				//				System.out.println("Object to be written = " + player.toString());
-				//				outputStream.writeObject(player);
-				//				
 				//				outputStream.flush(); // necessary to avoid SocketException
 				//				outputStream.close();
 				////				socket.close();
@@ -118,58 +104,4 @@ public class Client {
 			}
 		}
 	}
-
-
-	private static void printIntroDrawing() {
-		System.out.println("***************************************************************");
-		System.out.println("**********              STICKMAN ARCHER              **********");
-		System.out.println("***************************************************************");
-		System.out.println();
-		System.out.println("                                                        |\r\n" + 
-				"                                                         \\.\r\n" + 
-				"                                                         /|.\r\n" + 
-				"                                                       /  `|.\r\n" + 
-				"                                                     /     |.\r\n" + 
-				"                                                   /       |.\r\n" + 
-				"                                                 /         `|.\r\n" + 
-				"                                               /            |.\r\n" + 
-				"                                             /              |.\r\n" + 
-				"                                           /                |.\r\n" + 
-				"      __                                 /                  `|.\r\n" + 
-				"       -\\                              /                     |.\r\n" + 
-				"         \\\\                          /                       |.\r\n" + 
-				"           \\\\                      /                         |.\r\n" + 
-				"            \\|                   /                           |\\\r\n" + 
-				"              \\#####\\          /                             ||\r\n" + 
-				"          ==###########>     /                               ||\r\n" + 
-				"           \\##==      \\    /                                 ||\r\n" + 
-				"      ______ =       =|__/___                                ||\r\n" + 
-				"  ,--' ,----`-,__ ___/'  --,-`-==============================##==========>\r\n" + 
-				" \\               '        ##_______ ______   ______,--,____,=##,__\r\n" + 
-				"  `,    __==    ___,-,__,--'#'  ==='      `-'              | ##,-/\r\n" + 
-				"    `-,____,---'       \\####\\              |        ____,--\\_##,/\r\n" + 
-				"        #_              |##   \\  _____,---==,__,---'         ##\r\n" + 
-				"         #              ]===--==\\                            ||\r\n" + 
-				"         #,             ]         \\                          ||\r\n" + 
-				"          #_            |           \\                        ||\r\n" + 
-				"           ##_       __/'             \\                      ||\r\n" + 
-				"            ####='     |                \\                    |/\r\n" + 
-				"             ###       |                  \\                  |.\r\n" + 
-				"             ##       _'                    \\                |.\r\n" + 
-				"            ###=======]                       \\              |.\r\n" + 
-				"           ///        |                         \\           ,|.\r\n" + 
-				"           //         |                           \\         |.\r\n" + 
-				"                                                    \\      ,|.\r\n" + 
-				"                                                      \\    |.\r\n" + 
-				"                                                        \\  |.\r\n" + 
-				"                                                          \\|.\r\n" + 
-				"                                                          /.\r\n" + 
-				" Image from: cyu@athena.mit.edu (Erorppn Xrzavgm)              |");
-		System.out.println();
-		System.out.println("***************************************************************");
-		System.out.println("***************************************************************");
-		System.out.println();
-		System.out.println("What is your name? ");
-	}
-
 }
