@@ -87,10 +87,7 @@ public class Server {
 						) {
 
 					// 6. Turns
-					while(p1Lives > 0 && p2Lives > 0) {
-						
-					ServerUtility.showPlayerLives(activePlayer, waitingPlayer, p1, p2, p1Lives, p2Lives, false, output);
-
+					while(p1Lives > 0 && p2Lives > 0) {						
 
 						// Send turn
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
@@ -152,8 +149,6 @@ public class Server {
 
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
-							
-						
 							
 							
 						}

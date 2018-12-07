@@ -69,9 +69,9 @@ public class Client {
 					// BF: Players hp
 					
 //					// Players' lives
-					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					prompt = input.readLine();
-					System.out.println(prompt);
+//					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//					prompt = input.readLine();
+//					System.out.println(prompt);
 				}
 					
 
@@ -99,9 +99,9 @@ public class Client {
 							// if true  -> Calculate Distance
 					
 //					// Players' lives
-					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					prompt = input.readLine();
-					System.out.println(prompt);
+//					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//					prompt = input.readLine();
+//					System.out.println(prompt);
 
 					myTurn = false;
 				}
