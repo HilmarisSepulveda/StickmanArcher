@@ -87,9 +87,8 @@ public class Server {
 						) {
 
 					// 6. Turns
-					while(p1Lives > 0 && p2Lives > 0) {	
+					while(p1Lives > 0 && p2Lives > 0) {
 						
-
 						// Send turn
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("true");
@@ -97,12 +96,6 @@ public class Server {
 						// Send turn
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("false");
-						
-						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-						output.println("AP hp");
-
-						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-						output.println("Wp HP");
 
 
 						// Send enter angle prompt
@@ -156,6 +149,8 @@ public class Server {
 
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
+							
+						
 							
 							
 						}
