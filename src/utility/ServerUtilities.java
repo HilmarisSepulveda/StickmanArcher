@@ -33,8 +33,6 @@ public class ServerUtilities {
 
 	// TODO : Add OutputStream to parameters
 	public static void calculateHit(Player player, Arrow arrow, PrintWriter output) {
-		System.out.print("x location: " + arrow.getLocation().getX() + "\n");
-		System.out.print("y location: " + arrow.getLocation().getY() + "\n");
 
 		// Calculate missed distance
 		double missedHint =  arrow.getLocation().getX() -
@@ -49,6 +47,7 @@ public class ServerUtilities {
 				output.println("Arrow missed target by " +
 						(missedHint + player.getPlayerSize()) + " meters");
 				output.print("Hint: Try adding more power or increasing the angle");
+				output.flush();
 			}
 
 			// If missed distance positive, it passed the target.
@@ -57,6 +56,7 @@ public class ServerUtilities {
 				output.println("Arrow missed target by " +
 						(missedHint - player.getPlayerSize()) + " meters" );
 				output.println("Hint: Try dimishing power or decreasing the angle.");
+				output.flush();
 
 			}
 		} catch (IOException e) {
@@ -108,9 +108,6 @@ public class ServerUtilities {
 			System.out.println(location);
 
 		}
-
-
-
 	}
 
 	/**
@@ -167,10 +164,12 @@ public class ServerUtilities {
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
 						activePlayer.getName() +"'s lives = " + p2Lives);
+				output.flush();
 
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
 						activePlayer.getName() +"'s lives = " + p2Lives);
+				output.flush();
 
 			}
 
@@ -184,13 +183,14 @@ public class ServerUtilities {
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" 
 						+ activePlayer.getName() +"'s lives = " + p1Lives);
+				output.flush();
 
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" +
 						activePlayer.getName() +"'s lives = " + p1Lives);
+				output.flush();
 			}
 
-			System.out.println("Finished SPL");
 		}
 		catch (IOException e) {
 			e.printStackTrace();

@@ -44,6 +44,7 @@ public class Client {
 		// Send player name to server
 		output = new PrintWriter(socket.getOutputStream(), true);
 		output.println(playerName);
+		output.flush();
 		
 		ClientUtilities.showGreeting(playerName);
 
@@ -54,7 +55,6 @@ public class Client {
 				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
-				System.out.println("received turn = " + turn);
 
 				if (turn.equals("true")) {
 					myTurn = true;
@@ -68,6 +68,7 @@ public class Client {
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println();
 
 //					
 					// Players' lives
@@ -75,6 +76,7 @@ public class Client {
 					prompt = input.readLine();
 					System.out.println(prompt);
 					System.out.println("receive player lives not my turn");
+					System.out.println();
 				}
 			
 
@@ -89,17 +91,20 @@ public class Client {
 					// Sends angle to server
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
+					output.flush();
 	
 //
 					// Receive prompt to enter power
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println();
 
 
 					// Sends power to Server
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
+					output.flush();
 
 					
 					// Arrow hit / miss
@@ -108,33 +113,22 @@ public class Client {
 					System.out.println(prompt);
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println();
 
 //					
 					// Players' lives
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println();
 					
-						
+//					String str = null; 
+//					while((str = input.readLine()) != null)
+//						input.readLine();
+					
 					myTurn = false;
 					
 				}
-				
-//				// Arrow hit / miss
-//				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//				prompt = input.readLine();
-//				System.out.println(prompt);
-////				System.out.println("receive hit/miss prompt not my turn");
-//				
-//				// Players' lives
-//				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//				prompt = input.readLine();
-//				System.out.println(prompt);
-////				System.out.println("receive player lives not my turn");
-
-				//				outputStream.flush(); // necessary to avoid SocketException
-				//				outputStream.close();
-				////				socket.close();
 
 			}
 			catch (ConnectException e) {
@@ -146,5 +140,8 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
+		
+		in.close();
+		socket.close();
 	}
 }

@@ -3,15 +3,11 @@ package game;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Random;
-
-import javax.activity.ActivityRequiredException;
-
 import entity.Arrow;
 import entity.Bow;
 import entity.Player;
@@ -85,24 +81,21 @@ public class Server {
 					// 6. Turns
 					while(p1Lives > 0 && p2Lives > 0) {
 						
-						System.out.println("Before recieve turn");
 
 						// Send turn
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("true");
+						output.flush();
 
 						// Send turn
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("false");
-//
-						System.out.println("After recieved turn");
-//						
-						System.out.println("Active p:" + activePlayer.getName());
-						System.out.println("Waiting p: " + waitingPlayer.getName());
-//
+						output.flush();
+
 						// Send enter angle prompt
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("Enter the angle: ");
+						output.flush();
 
 						// Receive angle
 						input = new BufferedReader(new InputStreamReader(activePlayer.getSocket().getInputStream()));
@@ -112,16 +105,14 @@ public class Server {
 						// Send enter power prompt
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("Enter the power: ");
+						output.flush();
 
 						// Receive power
 						String powerString = input.readLine();
 						bow.setPower(Double.parseDouble(powerString));
-
+					
 						ServerUtilities.calculateTrajectory(arrow, bow, opponent);
-
-//						// TODO: Mandar al cliente
-//						ServerUtilities.calculateHit(opponent, arrow);
-
+						
 						Random rand = new Random();
 						int randNum = rand.nextInt(300);
 
@@ -131,19 +122,16 @@ public class Server {
 
 							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 							output.println("You have been hit!");
+							output.flush();
+							
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Arrow hit!");
 							output.println();
-							
 							output.flush();
+							
 
 							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
 									p1, p2, p1Lives, p2Lives, true, output);
-							
-//							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-//							output.println("Hello World");
-//							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-//							output.println("Hello World");
 							
 							
 							if(waitingPlayer.equals(p1)) 
@@ -172,20 +160,13 @@ public class Server {
 							// Arrow hit / miss to waiting player
 							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 							output.println("You live to see another day!");
-
+							output.flush();
+							
 							// Arrow hit / miss to active player
 							ServerUtilities.calculateHit(activePlayer, arrow, output);
 							
-							output.flush();
-							
 							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
-									p1, p2, p1Lives, p2Lives, true, output);
-
-//							// Player's lives
-//							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-//							output.println("Hello World");
-//							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-//							output.println("Hello World");
+									p1, p2, p1Lives, p2Lives, false, output);
 
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
@@ -203,8 +184,8 @@ public class Server {
 						System.out.println(p1Lives);
 						System.out.println(p2Lives);
 						
-//						p1Lives = 0;
-//						p2Lives = 0;
+						p1Lives = 0;
+						p2Lives = 0;
 						
 				
 						
@@ -220,10 +201,9 @@ public class Server {
 					if(p2Lives == 0)
 						System.out.println(p1.getName() + "wins.");
 
-
-//					socketC1.close();
-//					socketC2.close();
-//					System.exit(0);
+					socketC1.close();
+					socketC2.close();
+					System.exit(0);
 				}
 			}
 		}
