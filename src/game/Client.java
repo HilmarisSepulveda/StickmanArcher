@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import entity.Player;
 import geometry.Point;
+import utility.StickmanCalculations;
 
 public class Client {
 	/**
@@ -44,8 +45,6 @@ public class Client {
 		String playerName = in.nextLine();
 
 
-		System.out.println("Connected to server.");
-
 		// Send player name to server
 		output = new PrintWriter(socket.getOutputStream(), true);
 		output.println(playerName);
@@ -57,14 +56,17 @@ public class Client {
 				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
-				System.out.println(turn);
 
 				if (turn.equals("true")) {
 					myTurn = true;
 				}
 
-				if (!myTurn)
+				if (!myTurn) {
 					System.out.println("Waiting for opponent...");
+					// BF: Arrow missed or hit message
+					// BF: Players hp
+				}
+					
 
 				while (myTurn) {
 
@@ -85,6 +87,10 @@ public class Client {
 					// Sends power to Server
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
+					
+					// BF : Arrow hit 
+							// if true  -> Calculate Distance
+					// BF: Players' HP
 
 					myTurn = false;
 				}

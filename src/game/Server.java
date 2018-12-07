@@ -16,6 +16,7 @@ import entity.Arrow;
 import entity.Bow;
 import entity.Player;
 import geometry.Point;
+import utility.StickmanCalculations;
 
 public class Server {
 

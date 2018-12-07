@@ -1,4 +1,4 @@
-package game;
+package utility;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -126,7 +126,7 @@ public class StickmanCalculations {
 	 * @param bow The bow used to fire the arrow.
 	 * @param p2 
 	 */
-	static void calculateTrajectory(Arrow arrow, Bow bow, Player p2) {
+	public static void calculateTrajectory(Arrow arrow, Bow bow, Player p2) {
 
 		final double ACCELERATION = - 9.8;
 		double velocity = bow.getPower() * arrow.getVelocity();
