@@ -45,7 +45,7 @@ public class Server {
 				Bow bow = new Bow();
 
 				BufferedReader input;
-				PrintWriter output;
+				PrintWriter output = null;
 
 				// 3. Create player 1 with client 1 input
 				// Player 1
@@ -88,6 +88,9 @@ public class Server {
 
 					// 6. Turns
 					while(p1Lives > 0 && p2Lives > 0) {
+						
+					ServerUtility.showPlayerLives(activePlayer, waitingPlayer, p1, p2, p1Lives, p2Lives, false, output);
+
 
 						// Send turn
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
@@ -150,13 +153,11 @@ public class Server {
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
 							
-							ServerUtility.showPlayerLives(activePlayer, waitingPlayer, p1, p2, p1Lives, p2Lives, true, output);
+						
 							
 							
 						}
 						
-						ServerUtility.showPlayerLives(activePlayer, waitingPlayer, p1, p2, p1Lives, p2Lives, false, output);
-
 
 						Player temp = activePlayer;
 						activePlayer = waitingPlayer;

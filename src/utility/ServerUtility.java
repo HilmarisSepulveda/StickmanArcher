@@ -13,8 +13,8 @@ public class ServerUtility {
 		try {
 			if(waitingPlayer.equals(p1)) {
 
-				if (hit)
-					p1Lives--;
+//				if (hit)
+//					p1Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
@@ -30,8 +30,8 @@ public class ServerUtility {
 
 				System.out.println("inside");
 
-				if(hit)
-					p2Lives--;
+//				if(hit)
+//					p2Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" + 
