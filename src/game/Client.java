@@ -73,11 +73,13 @@ public class Client {
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println("receive hit/miss prompt not my turn");
 					
 					// Players' lives
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println("receive player lives not my turn");
 				}
 
 				while (myTurn) {
@@ -86,30 +88,36 @@ public class Client {
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println("receive angle");
 
 					// Sends angle to server
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
+					System.out.println("sent angle");
 
 					// Receive prompt to enter power
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
 					System.out.println();
+					System.out.println("receive power");
 
 					// Sends power to Server
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
+					System.out.println("sent power");
 					
 					// Arrow hit / miss
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println("receive hit/miss prompt my turn");
 					
 					// Players' lives
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println("receive player lives my turn");
 					
 					
 					myTurn = false;
