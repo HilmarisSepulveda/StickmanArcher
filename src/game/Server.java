@@ -80,12 +80,12 @@ public class Server {
 				activePlayer = p1;
 				waitingPlayer = p2;
 
-				while(socketC1.isConnected() 
-						&& socketC2.isConnected()
-						) {
+				while(socketC1.isConnected() && socketC2.isConnected()) {
 
 					// 6. Turns
 					while(p1Lives > 0 && p2Lives > 0) {
+						
+						System.out.println("Before recieve turn");
 
 						// Send turn
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
@@ -95,6 +95,10 @@ public class Server {
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("false");
 
+						System.out.println("After recieved turn");
+						
+						System.out.println("Active p:" + activePlayer.getName());
+						System.out.println("Waiting p: " + waitingPlayer.getName());
 
 						// Send enter angle prompt
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
@@ -115,71 +119,96 @@ public class Server {
 
 						ServerUtilities.calculateTrajectory(arrow, bow, opponent);
 
-						// Mandar al cliente
+						// TODO: Mandar al cliente
 						ServerUtilities.calculateHit(opponent, arrow);
-					
+
 						Random rand = new Random();
 						int randNum = rand.nextInt(300);
 
 
 						if (opponent.getHP() <= 0) {
 							System.out.println(waitingPlayer.getName() + " has died.");
-							
+
 							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 							output.println("You have been hit!");
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Arrow hit!");
-							
+
 							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
 									p1, p2, p1Lives, p2Lives, true, output);
 							
-							System.out.println("Changing opponent.");
-								
-							opponent.setLocation(new Point (randNum ,0));
+							if(waitingPlayer.equals(p1)) 
+									p1Lives--;
 							
+							if(waitingPlayer.equals(p2))
+									p2Lives--;
+						
+							System.out.println("Changing opponent.");
+
+							opponent.setLocation(new Point (randNum ,0));
+
 							System.out.println("Opponent HP before increase: "  + opponent.getHP());
 							opponent.setDefaultHP();
-							
+
 							System.out.println("Opponet location after reset:" + opponent.getLocation());
 							System.out.println("Opponent HP after increase: "  + opponent.getHP());
 
-		
+
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
-									
+
 						}
 						else {
+
+							// Arrow hit / miss to waiting player
+							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+							output.println("You live to see another day!");
+
+							// Arrow hit / miss to active player
+							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+							output.println("Blah blah calculations");
+
+							// Player's lives
 							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
 									p1, p2, p1Lives, p2Lives, false, output);
+
+							System.out.println("P1 lives = " + p1Lives);
+							System.out.println("P2 lives = " + p2Lives);
 						}
-							
-						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-						output.println("You live to see another day!");
-						
-			
-						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-						output.println("Blah blah calculations");
-						
-						
-						
+
 						Player temp = activePlayer;
 						activePlayer = waitingPlayer;
 						waitingPlayer = temp;
+						
+						
+						System.out.println("Switch players...");
+						System.out.println("Active p:" + activePlayer.getName());
+						System.out.println("Waiting p: " + waitingPlayer.getName());
+						
+						System.out.println(p1Lives);
+						System.out.println(p2Lives);
+						
+//						p1Lives = 0;
+//						p2Lives = 0;
+						
+				
+						
+//						output.flush();
 					}
-					
+
 					System.out.println();
 					System.out.println("GAME OVER!!!");
-					
+
 					if(p1Lives == 0)
 						System.out.println(p2.getName() + "wins.");
-					
+
 					if(p2Lives == 0)
 						System.out.println(p1.getName() + "wins.");
-					
-					
-					socketC1.close();
-					socketC2.close();
-					System.exit(0);
+
+
+//					socketC1.close();
+//					socketC2.close();
+//					System.exit(0);
 				}
 			}
 		}
@@ -193,5 +222,5 @@ public class Server {
 		}
 
 	}
-	
+
 }

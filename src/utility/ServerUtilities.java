@@ -155,26 +155,28 @@ public class ServerUtilities {
 					p1Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\n" +
+				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
 						activePlayer.getName() +"'s lives = " + p2Lives);
 				
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\n" +
+				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
 					activePlayer.getName() +"'s lives = " + p2Lives);
 					
 			}
 
 			if(waitingPlayer.equals(p2)) {
 				
+				System.out.println("inside");
+				
 				if(hit)
 					p2Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\n" +
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" +
 					activePlayer.getName() +"'s lives = " + p1Lives);
 				
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\n" +
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" +
 					activePlayer.getName() +"'s lives = " + p1Lives);
 			}
 			
