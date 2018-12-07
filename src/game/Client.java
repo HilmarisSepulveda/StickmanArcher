@@ -58,6 +58,11 @@ public class Client {
 				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
+				
+				// Received HP
+				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				prompt = input.readLine();
+				System.out.println(prompt);
 
 				if (turn.equals("true")) {
 					myTurn = true;
