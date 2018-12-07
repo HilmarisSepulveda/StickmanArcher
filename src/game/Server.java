@@ -129,31 +129,34 @@ public class Server {
 							output.println("You have been hit!");
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Arrow hit!");
+							
+							showPlayerLives(activePlayer, waitingPlayer, 
+									p1, p2, p1Lives, p2Lives, true, output);
 
-							if(waitingPlayer.equals(p1)) {
-								p1Lives--;
-
-								output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-								output.println(waitingPlayer.getName() +"'s lives = " + p1Lives);
-								output.println(activePlayer.getName() +"'s lives = " + p2Lives);
-								
-								output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-								output.println(waitingPlayer.getName() +"'s lives = " + p1Lives);
-								output.println(activePlayer.getName() +"'s lives = " + p2Lives);
-									
-							}
-
-							if(waitingPlayer.equals(p2)) {
-								p2Lives--;
-
-								output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-								output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
-								output.println(activePlayer.getName() +"'s lives = " + p1Lives);
-								
-								output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-								output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
-								output.println(activePlayer.getName() +"'s lives = " + p1Lives);
-							}
+//							if(waitingPlayer.equals(p1)) {
+//								p1Lives--;
+//
+//								output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+//								output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\n" +
+//										activePlayer.getName() +"'s lives = " + p2Lives);
+//								
+//								output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+//								output.println(waitingPlayer.getName() +"'s lives = " + p1Lives +
+//									activePlayer.getName() +"'s lives = " + p2Lives);
+//									
+//							}
+//
+//							if(waitingPlayer.equals(p2)) {
+//								p2Lives--;
+//
+//								output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+//								output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+//								output.println(activePlayer.getName() +"'s lives = " + p1Lives);
+//								
+//								output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+//								output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+//								output.println(activePlayer.getName() +"'s lives = " + p1Lives);
+//							}
 								
 							opponent.setLocation(new Point (randNum ,0));
 							
@@ -172,14 +175,14 @@ public class Server {
 						
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("You live to see another day!");
-						output.println();
 						
-						
+			
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("Blah blah calculations");
-						output.println();
 						
-
+						showPlayerLives(activePlayer, waitingPlayer, 
+								p1, p2, p1Lives, p2Lives, false, output);
+						
 						Player temp = activePlayer;
 						activePlayer = waitingPlayer;
 						waitingPlayer = temp;
@@ -211,4 +214,45 @@ public class Server {
 		}
 
 	}
+	
+	private static void showPlayerLives(Player activePlayer, 
+			Player waitingPlayer, Player p1, Player p2, 
+			int p1Lives, int p2Lives, boolean hit, PrintWriter output) {
+		
+		try {
+			if(waitingPlayer.equals(p1)) {
+				
+				if (hit)
+					p1Lives--;
+
+				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\n" +
+						activePlayer.getName() +"'s lives = " + p2Lives);
+				
+				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives +
+					activePlayer.getName() +"'s lives = " + p2Lives);
+					
+			}
+
+			if(waitingPlayer.equals(p2)) {
+				
+				if(hit)
+					p2Lives--;
+
+				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives +
+					activePlayer.getName() +"'s lives = " + p1Lives);
+				
+				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives +
+					activePlayer.getName() +"'s lives = " + p1Lives);
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+
+}
 }

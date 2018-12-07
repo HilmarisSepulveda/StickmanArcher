@@ -89,14 +89,16 @@ public class Client {
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
 					
+					// Arrow hit / miss
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
 					
+					// Players' lives
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
-					System.out.println();
+					
 					
 					myTurn = false;
 					
