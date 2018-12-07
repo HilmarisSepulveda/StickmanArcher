@@ -39,8 +39,6 @@ public class Client {
 
 		ClientUtilities.printIntroDrawing();
 
-		// 2 and 4: Print intro and Receive player name and send to server
-
 		Scanner in = new Scanner (System.in);
 		String playerName = in.nextLine();
 
