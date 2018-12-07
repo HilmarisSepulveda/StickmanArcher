@@ -1,4 +1,5 @@
 package utility;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
@@ -31,7 +32,7 @@ public class ServerUtilities {
 	 */
 
 	// TODO : Add OutputStream to parameters
-	public static void calculateHit(Player player, Arrow arrow) {
+	public static void calculateHit(Player player, Arrow arrow, PrintWriter output) {
 		System.out.print("x location: " + arrow.getLocation().getX() + "\n");
 		System.out.print("y location: " + arrow.getLocation().getY() + "\n");
 
@@ -39,24 +40,33 @@ public class ServerUtilities {
 		double missedHint =  arrow.getLocation().getX() -
 				player.getLocation().getX(); 
 
-		// If missed distance negative, it has not reached the target
-		if (missedHint < 0) {
-			System.out.println("Arrow missed target by " +
-					(missedHint + player.getPlayerSize()) + " meters");
-			System.out.println("Hint: Try adding more power or "
-					+ "increasing the angle");
-		}
+		output.flush();
 
-		// If missed distance positive, it passed the target.
-		if (missedHint > 0) {
-			System.out.println("Arrow missed target by " +
-					(missedHint - player.getPlayerSize()) + " meters");
-			System.out.println("Hint: Try dimishing power or "
-					+ "decreasing the angle.");
+		try {
+			// If missed distance negative, it has not reached the target
+			if (missedHint < 0) {
+				output = new PrintWriter(player.getSocket().getOutputStream(), true);
+				output.println("Arrow missed target by " +
+						(missedHint + player.getPlayerSize()) + " meters");
+				output.print("Hint: Try adding more power or increasing the angle");
+			}
+
+			// If missed distance positive, it passed the target.
+			if (missedHint > 0) {
+				output = new PrintWriter(player.getSocket().getOutputStream(), true);
+				output.println("Arrow missed target by " +
+						(missedHint - player.getPlayerSize()) + " meters" );
+				output.println("Hint: Try dimishing power or decreasing the angle.");
+
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println();
 
 	}
+
+
 
 	/**
 	 * Calculates the trajectory of a projectile

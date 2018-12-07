@@ -106,6 +106,8 @@ public class Client {
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					prompt = input.readLine();
+					System.out.println(prompt);
 
 //					
 					// Players' lives

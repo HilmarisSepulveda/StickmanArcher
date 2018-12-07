@@ -119,8 +119,8 @@ public class Server {
 
 						ServerUtilities.calculateTrajectory(arrow, bow, opponent);
 
-						// TODO: Mandar al cliente
-						ServerUtilities.calculateHit(opponent, arrow);
+//						// TODO: Mandar al cliente
+//						ServerUtilities.calculateHit(opponent, arrow);
 
 						Random rand = new Random();
 						int randNum = rand.nextInt(300);
@@ -133,11 +133,13 @@ public class Server {
 							output.println("You have been hit!");
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Arrow hit!");
+							output.println();
 							
 							output.flush();
 
 							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
 									p1, p2, p1Lives, p2Lives, true, output);
+							
 //							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 //							output.println("Hello World");
 //							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
@@ -172,8 +174,7 @@ public class Server {
 							output.println("You live to see another day!");
 
 							// Arrow hit / miss to active player
-							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-							output.println("Blah blah calculations");
+							ServerUtilities.calculateHit(activePlayer, arrow, output);
 							
 							output.flush();
 							
