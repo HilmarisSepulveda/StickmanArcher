@@ -144,7 +144,6 @@ public class Server {
 							System.out.println("Opponet location after reset:" + opponent.getLocation());
 							System.out.println("Opponent HP after increase: "  + opponent.getHP());
 
-		
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
 						}
