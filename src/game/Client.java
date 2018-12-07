@@ -43,6 +43,8 @@ public class Client {
 
 		Scanner in = new Scanner (System.in);
 		String playerName = in.nextLine();
+		
+		String prompt;
 
 
 		// Send player name to server
@@ -66,13 +68,23 @@ public class Client {
 				if (!myTurn) {
 					System.out.println("Waiting for opponent...");
 					System.out.println();
+					
+					// Arrow hit / miss
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
+					
+					// Players' lives
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
 				}
 
 				while (myTurn) {
 
 					// Receive prompt to enter angle
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					String prompt = input.readLine();
+					prompt = input.readLine();
 					System.out.println(prompt);
 
 					// Sends angle to server
