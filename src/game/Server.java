@@ -147,6 +147,8 @@ public class Server {
 
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
+							
+							
 						}
 
 						Player temp = activePlayer;

@@ -43,6 +43,8 @@ public class Client {
 
 		Scanner in = new Scanner (System.in);
 		String playerName = in.nextLine();
+		
+		String prompt;
 
 
 		// Send player name to server
@@ -65,6 +67,11 @@ public class Client {
 					System.out.println("Waiting for opponent...");
 					// BF: Arrow missed or hit message
 					// BF: Players hp
+					
+//					// Players' lives
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
 				}
 					
 
@@ -72,7 +79,7 @@ public class Client {
 
 					// Receive prompt to enter angle
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					String prompt = input.readLine();
+					prompt = input.readLine();
 					System.out.println(prompt);
 
 					// Sends angle to server
@@ -90,7 +97,11 @@ public class Client {
 					
 					// BF : Arrow hit 
 							// if true  -> Calculate Distance
-					// BF: Players' HP
+					
+//					// Players' lives
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
 
 					myTurn = false;
 				}
