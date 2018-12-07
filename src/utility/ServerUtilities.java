@@ -172,12 +172,12 @@ public class ServerUtilities {
 					p2Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" +
-					activePlayer.getName() +"'s lives = " + p1Lives);
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+				output.println(activePlayer.getName() +"'s lives = " + p1Lives);
 				
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" +
-					activePlayer.getName() +"'s lives = " + p1Lives);
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+				output.println(activePlayer.getName() +"'s lives = " + p1Lives);
 			}
 			
 			System.out.println("Finished SPL");
