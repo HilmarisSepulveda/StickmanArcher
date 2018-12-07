@@ -121,7 +121,7 @@ public class Server {
 					
 						Random rand = new Random();
 						int randNum = rand.nextInt(300);
-
+						
 
 						if (opponent.getHP() <= 0) {
 							System.out.println(waitingPlayer.getName() + " has died.");
@@ -147,12 +147,28 @@ public class Server {
 							System.out.println("Opponent HP after increase: "  + opponent.getHP());
 
 							System.out.println("P1 lives = " + p1Lives);
-							System.out.println("P2 lives = " + p2Lives);
-							
-						
-							
-							
+							System.out.println("P2 lives = " + p2Lives);			
 						}
+						
+//						// Send HP
+						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+//						output.println("hello world");
+						output.println(activePlayer.getName() + "'s HP" + activePlayer.getHP()
+//								+ "\t" + waitingPlayer.getName() + "'s HP" + waitingPlayer.getHP()
+								);
+		//				output.println(waitingPlayer.getName() + "'s HP" + waitingPlayer.getHP());
+//						
+//						
+//						// Send HP
+						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+//						output.println("Hello World");
+						output.println(activePlayer.getName() + "'s HP" + activePlayer.getHP()
+//								+ "\t" + waitingPlayer.getName() + "'s HP" + waitingPlayer.getHP()
+								);
+	//					output.println(waitingPlayer.getName() + "'s HP" + waitingPlayer.getHP());
+
+						
+						output.flush();
 						
 
 						Player temp = activePlayer;

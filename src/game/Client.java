@@ -70,13 +70,16 @@ public class Client {
 
 				if (!myTurn) {
 					System.out.println("Waiting for opponent...");
-					// BF: Arrow missed or hit message
-					// BF: Players hp
 					
-//					// Players' lives
-//					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//					// HP
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
+					
 //					prompt = input.readLine();
 //					System.out.println(prompt);
+					
+
 				}
 					
 
@@ -100,6 +103,15 @@ public class Client {
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
 					
+//					// HP
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
+//							
+//					prompt = input.readLine();
+//					System.out.println(prompt);
+				
+					
 					// BF : Arrow hit 
 							// if true  -> Calculate Distance
 					
@@ -111,8 +123,8 @@ public class Client {
 					myTurn = false;
 				}
 
-				//				outputStream.flush(); // necessary to avoid SocketException
-				//				outputStream.close();
+				//				output.flush(); // necessary to avoid SocketException
+				//				output.close();
 				////				socket.close();
 
 			}
