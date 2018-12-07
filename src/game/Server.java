@@ -125,7 +125,7 @@ public class Server {
 						Random rand = new Random();
 						int randNum = rand.nextInt(300);
 
-
+						output.flush();
 						if (opponent.getHP() <= 0) {
 							System.out.println(waitingPlayer.getName() + " has died.");
 
@@ -200,7 +200,7 @@ public class Server {
 						
 				
 						
-//						output.flush();
+						output.flush();
 					}
 
 					System.out.println();
