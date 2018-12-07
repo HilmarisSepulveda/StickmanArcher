@@ -16,6 +16,8 @@ import entity.Arrow;
 import entity.Bow;
 import entity.Player;
 import geometry.Point;
+import utility.ServerUtilities;
+import utility.ServerUtility;
 import utility.StickmanCalculations;
 
 public class Server {
@@ -148,8 +150,13 @@ public class Server {
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
 							
+							ServerUtility.showPlayerLives(activePlayer, waitingPlayer, p1, p2, p1Lives, p2Lives, true, output);
+							
 							
 						}
+						
+						ServerUtility.showPlayerLives(activePlayer, waitingPlayer, p1, p2, p1Lives, p2Lives, false, output);
+
 
 						Player temp = activePlayer;
 						activePlayer = waitingPlayer;
