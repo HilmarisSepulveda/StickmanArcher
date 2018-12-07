@@ -33,7 +33,6 @@ public class ServerUtilities {
 		System.out.print("x location: " + arrow.getLocation().getX() + "\n");
 		System.out.print("y location: " + arrow.getLocation().getY() + "\n");
 
-
 		// Calculate missed distance
 		double missedHint =  arrow.getLocation().getX() -
 				player.getLocation().getX(); 
