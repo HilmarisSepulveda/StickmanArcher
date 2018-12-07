@@ -17,7 +17,7 @@ import geometry.*;
  * @author Jorge Morales - Jorgito.exe
  */
 public class ServerUtilities {
-	
+
 	public static boolean playerIsDead(Player p) {
 		return p.getHP() == 0;
 	}
@@ -29,7 +29,7 @@ public class ServerUtilities {
 	 * @param player The player hit.
 	 * @param arrow The projectile.
 	 */
-	
+
 	// TODO : Add OutputStream to parameters
 	public static void calculateHit(Player player, Arrow arrow) {
 		System.out.print("x location: " + arrow.getLocation().getX() + "\n");
@@ -143,53 +143,53 @@ public class ServerUtilities {
 		System.out.println(p2.getName() + " HP: " + p2.getHP());
 		System.out.println();
 	}
-	
+
 	public static void showPlayerLives(Player activePlayer, 
 			Player waitingPlayer, Player p1, Player p2, 
 			int p1Lives, int p2Lives, boolean hit, PrintWriter output) {
-		
+
 		try {
 			if(waitingPlayer.equals(p1)) {
-				
+
 				if (hit)
 					p1Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
 						activePlayer.getName() +"'s lives = " + p2Lives);
-				
+
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 				output.println(waitingPlayer.getName() +"'s lives = " + p1Lives + "\t" +
-					activePlayer.getName() +"'s lives = " + p2Lives);
-					
+						activePlayer.getName() +"'s lives = " + p2Lives);
+
 			}
 
 			if(waitingPlayer.equals(p2)) {
-				
+
 				System.out.println("inside");
-				
+
 				if(hit)
 					p2Lives--;
 
 				output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
-				output.println(activePlayer.getName() +"'s lives = " + p1Lives);
-				
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" 
+						+ activePlayer.getName() +"'s lives = " + p1Lives);
+
 				output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
-				output.println(activePlayer.getName() +"'s lives = " + p1Lives);
+				output.println(waitingPlayer.getName() +"'s lives = " + p2Lives + "\t" +
+						activePlayer.getName() +"'s lives = " + p1Lives);
 			}
-			
+
 			System.out.println("Finished SPL");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 
-}
 
-	
+	}
+
+
 
 
 

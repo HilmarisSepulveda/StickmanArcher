@@ -94,12 +94,12 @@ public class Server {
 						// Send turn
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("false");
-
+//
 						System.out.println("After recieved turn");
-						
+//						
 						System.out.println("Active p:" + activePlayer.getName());
 						System.out.println("Waiting p: " + waitingPlayer.getName());
-
+//
 						// Send enter angle prompt
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 						output.println("Enter the angle: ");
@@ -133,13 +133,15 @@ public class Server {
 							output.println("You have been hit!");
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Arrow hit!");
+							
+							output.flush();
 
-//							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
-//									p1, p2, p1Lives, p2Lives, true, output);
-							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-							output.println("Hello World");
-							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-							output.println("Hello World");
+							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
+									p1, p2, p1Lives, p2Lives, true, output);
+//							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+//							output.println("Hello World");
+//							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+//							output.println("Hello World");
 							
 							
 							if(waitingPlayer.equals(p1)) 
@@ -172,12 +174,17 @@ public class Server {
 							// Arrow hit / miss to active player
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Blah blah calculations");
+							
+							output.flush();
+							
+							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
+									p1, p2, p1Lives, p2Lives, true, output);
 
-							// Player's lives
-							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
-							output.println("Hello World");
-							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
-							output.println("Hello World");
+//							// Player's lives
+//							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+//							output.println("Hello World");
+//							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+//							output.println("Hello World");
 
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
