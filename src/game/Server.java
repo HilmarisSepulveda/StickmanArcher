@@ -16,6 +16,7 @@ import entity.Arrow;
 import entity.Bow;
 import entity.Player;
 import geometry.Point;
+import utility.ServerUtilities;
 
 public class Server {
 
@@ -112,10 +113,10 @@ public class Server {
 						String powerString = input.readLine();
 						bow.setPower(Double.parseDouble(powerString));
 
-						StickmanCalculations.calculateTrajectory(arrow, bow, opponent);
+						ServerUtilities.calculateTrajectory(arrow, bow, opponent);
 
 						// Mandar al cliente
-						StickmanCalculations.calculateHit(opponent, arrow);
+						ServerUtilities.calculateHit(opponent, arrow);
 					
 						Random rand = new Random();
 						int randNum = rand.nextInt(300);
@@ -123,17 +124,35 @@ public class Server {
 
 						if (opponent.getHP() <= 0) {
 							System.out.println(waitingPlayer.getName() + " has died.");
+							
+							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+							output.println("You have been hit!");
+							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+							output.println("Arrow hit!");
 
 							if(waitingPlayer.equals(p1)) {
 								p1Lives--;
-								System.out.println(waitingPlayer.getName() +"'s lives = " + p1Lives);
-								System.out.println(activePlayer.getName() +"'s lives = " + p2Lives);
+
+								output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+								output.println(waitingPlayer.getName() +"'s lives = " + p1Lives);
+								output.println(activePlayer.getName() +"'s lives = " + p2Lives);
+								
+								output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+								output.println(waitingPlayer.getName() +"'s lives = " + p1Lives);
+								output.println(activePlayer.getName() +"'s lives = " + p2Lives);
+									
 							}
 
 							if(waitingPlayer.equals(p2)) {
 								p2Lives--;
-								System.out.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
-								System.out.println(activePlayer.getName() +"'s lives = " + p1Lives);
+
+								output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+								output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+								output.println(activePlayer.getName() +"'s lives = " + p1Lives);
+								
+								output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+								output.println(waitingPlayer.getName() +"'s lives = " + p2Lives);
+								output.println(activePlayer.getName() +"'s lives = " + p1Lives);
 							}
 								
 							opponent.setLocation(new Point (randNum ,0));
@@ -147,7 +166,19 @@ public class Server {
 		
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
+									
 						}
+						
+						
+						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+						output.println("You live to see another day!");
+						output.println();
+						
+						
+						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+						output.println("Blah blah calculations");
+						output.println();
+						
 
 						Player temp = activePlayer;
 						activePlayer = waitingPlayer;

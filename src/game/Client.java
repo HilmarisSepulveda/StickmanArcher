@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 
 import entity.Player;
 import geometry.Point;
+import utility.ClientUtilities;
+import utility.ServerUtilities;
 
 public class Client {
 	/**
@@ -35,20 +37,19 @@ public class Client {
 
 		boolean isConnected = socket.isConnected();
 
-		StickmanCalculations.printIntroDrawing();
+		ClientUtilities.printIntroDrawing();
 
 		// 2 and 4: Print intro and Receive player name and send to server
-
 
 		Scanner in = new Scanner (System.in);
 		String playerName = in.nextLine();
 
 
-		System.out.println("Connected to server.");
-
 		// Send player name to server
 		output = new PrintWriter(socket.getOutputStream(), true);
 		output.println(playerName);
+		
+		ClientUtilities.showGreeting(playerName);
 
 		while(isConnected) {
 
@@ -57,14 +58,15 @@ public class Client {
 				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
-				System.out.println(turn);
 
 				if (turn.equals("true")) {
 					myTurn = true;
 				}
 
-				if (!myTurn)
+				if (!myTurn) {
 					System.out.println("Waiting for opponent...");
+					System.out.println();
+				}
 
 				while (myTurn) {
 
@@ -81,12 +83,23 @@ public class Client {
 					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					prompt = input.readLine();
 					System.out.println(prompt);
+					System.out.println();
 
 					// Sends power to Server
 					output = new PrintWriter(socket.getOutputStream(), true);
 					output.println(in.nextDouble());
-
+					
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
+					
+					input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					prompt = input.readLine();
+					System.out.println(prompt);
+					System.out.println();
+					
 					myTurn = false;
+					
 				}
 
 				//				outputStream.flush(); // necessary to avoid SocketException
