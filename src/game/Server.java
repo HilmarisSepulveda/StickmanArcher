@@ -171,8 +171,7 @@ public class Server {
 							System.out.println("P2 lives = " + p2Lives);
 									
 						}
-						
-						
+							
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("You live to see another day!");
 						
