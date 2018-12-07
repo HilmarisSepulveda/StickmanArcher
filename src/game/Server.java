@@ -75,7 +75,7 @@ public class Server {
 				p2.setPlayerLocation(new Point(0,0));
 				p2.setSocket(socketC2);
 
-
+//
 				Player activePlayer = new Player();
 				Player waitingPlayer = new Player();
 
@@ -96,7 +96,6 @@ public class Server {
 						// Send turn
 						output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
 						output.println("false");
-
 
 						// Send enter angle prompt
 						output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
