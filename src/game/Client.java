@@ -60,6 +60,7 @@ public class Client {
 				// Receive turn
 				input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				String turn = input.readLine();
+				System.out.println("received turn = " + turn);
 
 				if (turn.equals("true")) {
 					myTurn = true;
@@ -118,8 +119,7 @@ public class Client {
 					prompt = input.readLine();
 					System.out.println(prompt);
 					System.out.println("receive player lives my turn");
-					
-					
+						
 					myTurn = false;
 					
 				}

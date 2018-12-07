@@ -63,12 +63,6 @@ public class ClientUtilities {
 		System.out.println("***************************************************************");
 		System.out.println(" Hello " +  playerName + "!");
 		System.out.println("***************************************************************");
-
-
-		System.out.println();
-		System.out.println(" Press enter to start the adventure.");
-		System.out.println();
-		System.out.println("***************************************************************");
 		System.out.println();
 		System.out.println();
 	}
