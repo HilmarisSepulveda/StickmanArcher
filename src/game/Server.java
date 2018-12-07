@@ -134,8 +134,13 @@ public class Server {
 							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
 							output.println("Arrow hit!");
 
-							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
-									p1, p2, p1Lives, p2Lives, true, output);
+//							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
+//									p1, p2, p1Lives, p2Lives, true, output);
+							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+							output.println("Hello World");
+							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+							output.println("Hello World");
+							
 							
 							if(waitingPlayer.equals(p1)) 
 									p1Lives--;
@@ -169,8 +174,10 @@ public class Server {
 							output.println("Blah blah calculations");
 
 							// Player's lives
-							ServerUtilities.showPlayerLives(activePlayer, waitingPlayer, 
-									p1, p2, p1Lives, p2Lives, false, output);
+							output = new PrintWriter(waitingPlayer.getSocket().getOutputStream(), true);
+							output.println("Hello World");
+							output = new PrintWriter(activePlayer.getSocket().getOutputStream(), true);
+							output.println("Hello World");
 
 							System.out.println("P1 lives = " + p1Lives);
 							System.out.println("P2 lives = " + p2Lives);
